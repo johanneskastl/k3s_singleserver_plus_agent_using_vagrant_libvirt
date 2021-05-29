@@ -34,3 +34,23 @@ In case you do not want Ansible to install k3s (because you want to install it y
 
 When tearing down the machine, the kubeconfig and token files that was download does not get deleted unfortunately.
 To not cause problems the next time you start, just run `rm ansible/k3s-kubeconfig ansible/k3s-token` and all is well.
+
+## Creating additional agent nodes
+
+You can modify the Vagrantfile to create additional agent nodes by tweaking two lines.
+
+1. Setting the number of agents (in this example to `2`):
+
+```
+  ###################################################################################
+  # define number of agents
+  W = 2
+```
+
+2. Adding the additional agent nodes to the `ansible_groups` line:
+```
+      ansible.groups = {
+        "k3sservers"  => [ "k3sserver" ],
+        "k3sagents"   => [ "k3sagent1", "k3sagent2" ]
+      }
+```
